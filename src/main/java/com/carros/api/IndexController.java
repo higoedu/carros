@@ -54,6 +54,7 @@ public class IndexController {
 	}
 	*/
 	
+	/*
 	@GetMapping("/login/{login}/senha/{senha}")
 	public String login(@PathVariable("login") String login, @PathVariable("senha") String senha) {
 		return "login: " + login + ", senha: " + senha;
@@ -67,6 +68,12 @@ public class IndexController {
 	@GetMapping("/carros/tipo/{tipo}")
 	public String login(@PathVariable("tipo") String tipo) {
 		return "Lista de Carros: " + tipo;
+	}
+	*/
+		
+	@PostMapping("/login")
+	public String login(@RequestParam("login") String login, @RequestParam("senha") String senha) {
+		return "login: " + login + ", senha" + senha;
 	}
 	
 }
