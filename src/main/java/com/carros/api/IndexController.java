@@ -70,10 +70,17 @@ public class IndexController {
 		return "Lista de Carros: " + tipo;
 	}
 	*/
-		
+	
+	/*
 	@PostMapping("/login")
 	public String login(@RequestParam("login") String login, @RequestParam("senha") String senha) {
 		return "login: " + login + ", senha" + senha;
+	}
+	*/
+	
+	@GetMapping()
+	public String get() {
+		return "API dos Carros: ";
 	}
 	
 }
