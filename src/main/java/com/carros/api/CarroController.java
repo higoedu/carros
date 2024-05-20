@@ -67,14 +67,13 @@ public class CarroController {
 				.buildAndExpand(id).toUri();
 	}
 	
-	/*
 	@PutMapping("{id}")
 	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
 		Carro c = service.update(carro, id);
 		
 		return "Carro atualizado com sucesso!" + c.getId();
 	}
-	*/
+	
 	@DeleteMapping("{id}")
 	public String delete(@PathVariable("id") Long id) {
 		service.delete(id);
