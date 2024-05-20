@@ -67,14 +67,18 @@ public class CarroController {
 				.buildAndExpand(id).toUri();
 	}
 	
-	@PutMapping("{id}")
-	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
-		Carro c = service.update(carro, id);
+	@PutMapping("/{id}")
+	public ResponseEntity put(@PathVariable("id") Long id, @RequestBody Carro carro) {
+		carro.setId(id);
 		
-		return "Carro atualizado com sucesso!" + c.getId();
+		CarroDTO c = service.update(carro, id);
+		
+		return c != null ?
+				ResponseEntity.ok(c) :
+				ResponseEntity.notFound().build();
 	}
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping("/{id}")
 	public String delete(@PathVariable("id") Long id) {
 		service.delete(id);
 		
