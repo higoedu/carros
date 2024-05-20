@@ -39,12 +39,12 @@ public class CarroService {
 
 		return CarroDTO.create(rep.save(carro));
 	}
-	/*
+	
 	public Carro update(Carro carro, Long id) {
 		Assert.notNull(carro.getId(), "Não foi possível atualizar o registro");
 		
 		//Busca o carro no banco de dados
-		Optional<Carro> optional = getCarroById(id);
+		Optional<Carro> optional = rep.findById(id);
 		if(optional.isPresent()) {
 			Carro db = optional.get();
 			//Copiar as propriedades
@@ -61,7 +61,7 @@ public class CarroService {
 		}
 		
 	}
-	*/
+	
 	public void delete(Long id) {
 		Optional<CarroDTO> carro = getCarroById(id);
 
