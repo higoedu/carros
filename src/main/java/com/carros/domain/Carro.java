@@ -5,7 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Carro {
 	
 	@Id
@@ -13,7 +16,8 @@ public class Carro {
 	private Long id;
 	private String nome;
 	private String tipo;
-	
+
+	/*	
 	public Carro() {
 		
 	}
@@ -46,4 +50,5 @@ public class Carro {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	*/
 }
