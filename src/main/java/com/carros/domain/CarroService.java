@@ -3,10 +3,13 @@ package com.carros.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+
+import com.carros.domain.dto.CarroDTO;
 
 @Service
 public class CarroService {
@@ -14,17 +17,31 @@ public class CarroService {
 	@Autowired
 	private CarroRepository rep;
 
-	public Iterable<Carro> getCarros(){
-		return rep.findAll();
+	public List<CarroDTO> getCarros(){
+		return rep.findAll().stream().map(CarroDTO::new).collect(Collectors.toList());
+		/*
+		List<Carro> carros = rep.findAll();
+		
+		List<CarroDTO> list = carros.stream().map(CarroDTO::new).collect(Collectors.toList());
+		*/
+		
+		/*
+		List<CarroDTO> list = new ArrayList<>();
+
+		for(Carro c : carros) {
+			list.add(new CarroDTO(c));
+		}
+
+		return list;
+		*/
 	}
 
 	public Optional<Carro> getCarroById(Long id){
 		return rep.findById(id);
 	}
 	
-	//public Iterable<Carro> getCarrosByTipo(String tipo){
-	public List<Carro> getCarrosByTipo(String tipo){
-		return rep.findByTipo(tipo);
+	public List<CarroDTO> getCarrosByTipo(String tipo){
+		return rep.findByTipo(tipo).stream().map(CarroDTO::new).collect(Collectors.toList());
 	}
 	
 	public Carro insert(Carro carro) {
@@ -53,22 +70,6 @@ public class CarroService {
 			throw new RuntimeException("Não foi possível atualizar o registro");
 		}
 		
-		/*
-
-		getCarroById(id).map(db -> {
-			//Copiar as propriedades
-			db.setNome(carro.getNome());
-			db.setTipo(carro.getTipo());
-			System.out.println("Carro id: " + db.getId());
-			
-			//Atualiza a carro
-			rep.save(db);
-			
-			return db;
-		}).orElseThrow() -> new RuntimeException("Não foi possível atualizar o registro");
-		
-		*/
-
 	}
 
 	public void delete(Long id) {
@@ -77,16 +78,6 @@ public class CarroService {
 		if(carro.isPresent()) {
 			rep.deleteById(id);
 		}
-	}
-
-	public List<Carro> getCarrosFake(){
-		List<Carro> carros = new ArrayList<>();
-		
-		carros.add(new Carro(1L, "Fusca"));
-		carros.add(new Carro(2L, "Brasilia"));
-		carros.add(new Carro(3L, "Chevette"));
-		
-		return carros;
 	}
 	
 }
