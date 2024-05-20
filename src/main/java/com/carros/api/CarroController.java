@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.carros.domain.Carro;
 import com.carros.domain.CarroService;
+import com.carros.domain.dto.CarroDTO;
 
 @RestController
 @RequestMapping("api/v1/carros")
@@ -25,51 +26,22 @@ public class CarroController {
 	private CarroService service;// = new CarroService();
 	
 	@GetMapping()
-	/*
-	public Iterable<Carro> get() {
-		return service.getCarros();
-	}
-	*/
-	public ResponseEntity<Iterable<Carro>> get() {
-		//return new ResponseEntity<>(service.getCarros(), HttpStatus.OK);
-
+	public ResponseEntity get() {
 		return ResponseEntity.ok(service.getCarros());
 	}
 	
 	@GetMapping("/{id}")
-	/*
-	public Optional<Carro> get(@PathVariable Long id) {
-		return service.getCarroById(id);
-	}
-	*/
 	public ResponseEntity get(@PathVariable("id") Long id) {
 		Optional<Carro> carro = service.getCarroById(id);
-		
-		/*
-		if(carro.isPresent()) {
-			return ResponseEntity.ok(carro.get());
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-		*/
-		
-		/*
-		return carro.isPresent() ?
-				ResponseEntity.ok(carro.get()) :
-				ResponseEntity.notFound().build();
-		*/
-		
+				
 		return carro
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
 	}
 		
 	@GetMapping("/tipo/{tipo}")
-	//public Iterable<Carro> getCarrosByTipo(@PathVariable("tipo") String tipo){
 	public ResponseEntity getCarrosByTipo(@PathVariable("tipo") String tipo){
-		//return service.getCarrosByTipo(tipo);
-		
-		List<Carro> carros = service.getCarrosByTipo(tipo);
+		List<CarroDTO> carros = service.getCarrosByTipo(tipo);
 		
 		return carros.isEmpty() ?
 				ResponseEntity.noContent().build() :
