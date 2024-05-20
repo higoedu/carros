@@ -32,7 +32,7 @@ public class CarroController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity get(@PathVariable("id") Long id) {
-		Optional<Carro> carro = service.getCarroById(id);
+		Optional<CarroDTO> carro = service.getCarroById(id);
 				
 		return carro
 				.map(ResponseEntity::ok)
@@ -54,14 +54,14 @@ public class CarroController {
 		
 		return "Carro salvo com sucesso!" + c.getId();
 	}
-	
+	/*
 	@PutMapping("{id}")
 	public String put(@PathVariable("id") Long id, @RequestBody Carro carro) {
 		Carro c = service.update(carro, id);
 		
 		return "Carro atualizado com sucesso!" + c.getId();
 	}
-	
+	*/
 	@DeleteMapping("{id}")
 	public String delete(@PathVariable("id") Long id) {
 		service.delete(id);
