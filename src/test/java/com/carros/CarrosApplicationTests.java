@@ -12,6 +12,7 @@ import com.carros.domain.dto.CarroDTO;
 
 import static junit.framework.TestCase.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
@@ -51,5 +52,8 @@ public class CarrosApplicationTests {
 
 	@Test
 	public void test2() {
+		List<CarroDTO> carros = service.getCarros();
+		
+		assertEquals(31, carros.size());
 	}
 }
