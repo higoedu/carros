@@ -8,6 +8,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.carros.domain.Carro;
 import com.carros.domain.CarroService;
+import com.carros.domain.dto.CarroDTO;
+
+import static junit.framework.TestCase.*;
+
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,7 +27,26 @@ public class CarrosApplicationTests {
 		carro.setNome("Ferrari");
 		carro.setTipo("esportivos");
 		
-		service.insert(carro);
+		CarroDTO c = service.insert(carro);
+		
+		assertNotNull(c);
+		
+		Long id = c.getId();
+		assertNotNull(id);
+		
+		//Buscar o objeto
+		Optional<CarroDTO> op = service.getCarroById(id);
+		assertTrue(op.isPresent());
+		
+		c = op.get();
+		assertEquals("Ferrari", c.getNome());
+		assertEquals("esportivos", c.getTipo());
+		
+		//Deletar o objeto
+		service.delete(id);
+		
+		//Verificar se deletou
+		assertFalse(service.getCarroById(id).isPresent());
 	}
 
 	@Test
