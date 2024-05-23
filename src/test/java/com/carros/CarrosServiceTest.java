@@ -1,5 +1,6 @@
 package com.carros;
 
+import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,9 @@ public class CarrosServiceTest {
 		assertNotNull(id);
 		
 		//Buscar o objeto
-		Optional<CarroDTO> op = service.getCarroById(id);
-		assertTrue(op.isPresent());
+		c = service.getCarroById(id);
+		assertNotNull(c);
 		
-		c = op.get();
 		assertEquals("Ferrari", c.getNome());
 		assertEquals("esportivos", c.getTipo());
 		
@@ -47,7 +47,12 @@ public class CarrosServiceTest {
 		service.delete(id);
 		
 		//Verificar se deletou
-		assertFalse(service.getCarroById(id).isPresent());
+		try {
+			assertNull(service.getCarroById(id));
+			fail("O carro não foi excluído!");
+		} catch(ObjectNotFoundException ex) {
+			//Ok
+		}
 	}
 
 	@Test
@@ -68,11 +73,9 @@ public class CarrosServiceTest {
 
 	@Test
 	public void testGet() {
-		Optional<CarroDTO> op = service.getCarroById(11L);
+		CarroDTO c = service.getCarroById(11L);
 		
-		assertTrue(op.isPresent());
-		
-		CarroDTO c = op.get();
+		assertNotNull(c);
 		
 		assertEquals("Ferrari FF", c.getNome());
 	}
