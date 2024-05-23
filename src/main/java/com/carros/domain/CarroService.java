@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.carros.api.exception.ObejctNotFoundException;
 import com.carros.domain.dto.CarroDTO;
 
 @Service
@@ -21,13 +22,9 @@ public class CarroService {
 		return rep.findAll().stream().map(CarroDTO::create).collect(Collectors.toList());
 	}
 
-	public Optional<CarroDTO> getCarroById(Long id){
-		return rep.findById(id).map(CarroDTO::create);
-
-		/*
+	public CarroDTO getCarroById(Long id){
 		Optional<Carro> carro = rep.findById(id);
-		return carro.map(c -> Optional.of(new CarroDTO(c))).orElse(null);
-		*/
+		return carro.map(CarroDTO::create).orElseThrow(() -> new ObejctNotFoundException("Carro não encontrado!"));
 	}
 	
 	public List<CarroDTO> getCarrosByTipo(String tipo){
